@@ -345,6 +345,15 @@ input[type=range]{accent-color:var(--blue);background:transparent;height:22px;pa
     </div>
   </header>
 
+  <!-- Update available banner (hidden until a newer version is detected) -->
+  <div id="update-banner" style="display:none;background:rgba(88,166,255,.12);border-bottom:1px solid rgba(88,166,255,.3);padding:7px 18px;display:none;align-items:center;justify-content:space-between;gap:10px;font-size:12px;font-family:var(--mono);color:var(--blue)">
+    <span id="update-msg">⬆ A newer version is available</span>
+    <div style="display:flex;gap:8px;align-items:center">
+      <a id="update-link" href="https://mallon42.github.io/intu-monitor/" target="_blank" rel="noopener" style="color:var(--blue);font-weight:600;text-decoration:none">Open latest →</a>
+      <button onclick="document.getElementById('update-banner').style.display='none'" style="background:none;border:none;color:var(--t3);cursor:pointer;font-size:14px;padding:0 4px;line-height:1">✕</button>
+    </div>
+  </div>
+
   <!-- NAV -->
   <nav id="nav">
     <button class="tbtn active" onclick="App.tab('dashboard')">Dashboard</button>
@@ -829,7 +838,7 @@ const App = {
   /* Set this to the raw GitHub URL of your version.json file once your repo is live.
      Example: 'https://raw.githubusercontent.com/brianmallon/intu-monitor/main/version.json'
      Leave empty to disable the version check feature. */
-  VERSION_CHECK_URL:'',
+  VERSION_CHECK_URL:'https://raw.githubusercontent.com/mallon42/intu-monitor/main/version.json',
 
   s: {
     apiKey:'', quote:null, metrics:null, recs:null, targets:null, news:[], filings:[], insiderTx:[], hrbNews:[],
@@ -1052,6 +1061,32 @@ const App = {
       },{capture:true,passive:true});
       App.refresh();
       if(App.s.refreshInterval>0)App.s.timer=setInterval(App.refresh,App.s.refreshInterval);
+      /* Silent startup version check — runs 4 seconds after load so it
+         doesn't compete with the initial data fetch */
+      if(App.VERSION_CHECK_URL){
+        setTimeout(async()=>{
+          try{
+            const ctrl=new AbortController();
+            setTimeout(()=>ctrl.abort(),8000);
+            const r=await fetch(App.VERSION_CHECK_URL+'?_='+Date.now(),{signal:ctrl.signal});
+            const data=await r.json();
+            const latest=data.version;
+            if(latest&&latest!==App.VERSION){
+              const banner=document.getElementById('update-banner');
+              const msg=document.getElementById('update-msg');
+              const link=document.getElementById('update-link');
+              if(banner&&msg&&link){
+                msg.textContent=`⬆ Version ${latest} is available — you have v${App.VERSION}`;
+                if(data.pageUrl)link.href=data.pageUrl;
+                banner.style.display='flex';
+              }
+              /* Also update the About modal status if it's open */
+              const vs=document.getElementById('about-ver-status');
+              if(vs)vs.innerHTML=`<span style="color:#E3B341">⚠ Update available: <strong>v${latest}</strong></span>${data.pageUrl?` — <a href="${data.pageUrl}" target="_blank" rel="noopener" style="color:var(--blue)">Open latest →</a>`:''}`;
+            }
+          }catch(_){/* silent — network errors should never break the tool */}
+        },4000);
+      }
       /* Live clock — updates every second, independent of data refresh */
       const tickClock=()=>{
         const el=document.getElementById('htime');

@@ -1,0 +1,7 @@
+{
+  "version": "2.2",
+  "releaseDate": "2026-06-09",
+  "releaseNotes": "Independent chart timeframes per chart card, Export/Import portfolio (JSON/CSV/E-Trade), live clock in header, 52-week low intraday correction, volume fallback, Today intraday price chart, market overview strip (DIA/SPY/QQQ), Insider Trades tab, About modal with version check.",
+  "pageUrl": "https://mallon42.github.io/intu-monitor/",
+  "downloadUrl": "https://mallon42.github.io/intu-monitor/intu_monitor.html"
+}
