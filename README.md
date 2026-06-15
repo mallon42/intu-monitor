@@ -1,4 +1,4 @@
-# ◈ INTU Monitor v2.3
+# ◈ INTU Monitor v2.4
 
 **A standalone financial monitoring dashboard for Intuit (INTU) shareholders — built for the people most affected by the May 2026 layoffs and stock decline.**
 
