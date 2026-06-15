@@ -1,0 +1,7 @@
+{
+  "version": "2.4",
+  "releaseDate": "2026-06-15",
+  "releaseNotes": "Major update: Candlestick chart toggle, Fibonacci retracement, Pre/After-hours session badge, Earnings History chart (EPS actual vs estimate, 9 quarters), Short Interest tile, OBV chart, ATR(14) volatility chart + dashboard tile, Peer Comparison (INTU vs HRB normalized), Dividend yield tile, RSU Vesting Timeline by grant year.",
+  "pageUrl": "https://mallon42.github.io/intu-monitor/",
+  "downloadUrl": "https://mallon42.github.io/intu-monitor/index.html"
+}
