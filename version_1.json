@@ -1,0 +1,7 @@
+{
+  "version": "3.0",
+  "releaseDate": "2026-08-12",
+  "releaseNotes": "v3.0 — Multi-company support (INTU + SPCX) with a company switcher in the top-left. Major reliability pass: fixed the chart data URLs that broke all charts, added graceful fallback if the Chart.js CDN ever fails, made the earnings countdown and price levels per-company, and fixed internal state consistency. Reviewed for cross-browser behavior and long-term stability.",
+  "pageUrl": "https://mallon42.github.io/intu-monitor/",
+  "downloadUrl": "https://mallon42.github.io/intu-monitor/index.html"
+}
